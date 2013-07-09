@@ -1,4 +1,4 @@
 module Songdrop
-  class Drop < OpenStruct
+  class Drop < Base
   end
 end

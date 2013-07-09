@@ -17,15 +17,13 @@ module Songdrop
       http_request(:delete, url, params, &block)
     end
 
-    def http_request(method, url, options={}, &block)
-      options[:payload] ||= {}
-      options.merge!({:headers => {:Accept => "application/json"}})
-      options[:payload].merge!(:client => client_token)
-      options[:payload].merge!(:token => User.current_user.combined_api_token) if User.current_user
+    def self.http_request(method, url, options={}, &block)
+      bw_options = {:payload => options}
+      bw_options.merge!({:headers => {:Accept => "application/json"}})
 
-      puts "[SongdropAPI] #{method} #{url} with: #{options.inspect}"
+      puts "[Songdrop::HTTP] #{method} #{url} with: #{bw_options.inspect}"
 
-      BubbleWrap::HTTP.send(method, url, options) do |response|
+      BubbleWrap::HTTP.send(method, url, bw_options) do |response|
         if response.ok?
           begin #in case we don't receive JSON back, we don't want the app to crash:
             json = BubbleWrap::JSON.parse(response.body.to_str)

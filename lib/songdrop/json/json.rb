@@ -1,5 +1,3 @@
-require 'json'
-
 module Songdrop
   class JSON
 

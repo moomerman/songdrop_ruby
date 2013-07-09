@@ -1,4 +1,4 @@
 module Songdrop
-  class Error < OpenStruct
+  class Error < Base
   end
 end

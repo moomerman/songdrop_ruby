@@ -2,11 +2,11 @@ module Songdrop
   class Base
 
     def initialize(properties={})
-      @source = OpenStruct.new(properties)
+      @properties = properties
     end
 
     def method_missing(method, *args, &block)
-      @source.send(method, *args, &block)
+      @properties[method.to_sym]
     end
 
   end

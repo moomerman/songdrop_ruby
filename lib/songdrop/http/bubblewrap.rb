@@ -25,14 +25,9 @@ module Songdrop
 
       BubbleWrap::HTTP.send(method, url, bw_options) do |response|
         if response.ok?
-          begin #in case we don't receive JSON back, we don't want the app to crash:
-            json = BubbleWrap::JSON.parse(response.body.to_str)
-            block.call response, json
-          rescue
-            block.call response, nil
-          end
+          block.call response.body.to_str, nil
         else
-          block.call response, nil
+          block.call nil, response.body.to_str
         end
       end
     end

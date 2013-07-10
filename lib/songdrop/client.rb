@@ -49,7 +49,6 @@ module Songdrop
         target = response || error
         JSON.parse(target) do |obj|
           res = Parser.parse(obj)
-          puts "[Songdrop::Client] in handle, parsed is #{res}"
           res = res.first if res.is_a? Array and res.size == 1
           block.call res if block
           res

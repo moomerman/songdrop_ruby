@@ -2,7 +2,9 @@ module Songdrop
   class JSON
 
     def self.parse(json, &block)
-      block.call ::JSON.parse(json)
+      result = ::JSON.parse(json)
+      block.call result if block
+      result
     end
 
   end

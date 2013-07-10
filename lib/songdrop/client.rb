@@ -9,7 +9,7 @@ module Songdrop
     end
 
     def get(path, params={}, &block)
-      puts "[Songdrop::Client] get #{path} with #{params.inspect} block? #{block_given?}"
+      puts "[Songdrop::Client] GET #{path} with #{params.inspect} block? #{block_given?}"
       params.merge!(:client => @token, :token => @auth_token)
       HTTP.get(full_url(path), params) do |response, error|
         handle_response(response, error, &block)
@@ -17,7 +17,7 @@ module Songdrop
     end
 
     def put(path, params={}, &block)
-      puts "[Songdrop::Client] put #{path} with #{params.inspect} block? #{block_given?}"
+      puts "[Songdrop::Client] PUT #{path} with #{params.inspect} block? #{block_given?}"
       params.merge!(:client => @token, :token => @auth_token)
       HTTP.put(full_url(path), params) do |response, error|
         handle_response(response, error, &block)
@@ -25,7 +25,7 @@ module Songdrop
     end
 
     def post(path, params={}, &block)
-      puts "[Songdrop::Client] post #{path} with #{params.inspect} block? #{block_given?}"
+      puts "[Songdrop::Client] POST #{path} with #{params.inspect} block? #{block_given?}"
       params.merge!(:client => @token, :token => @auth_token)
       HTTP.post(full_url(path), params) do |response, error|
         handle_response(response, error, &block)
@@ -33,7 +33,7 @@ module Songdrop
     end
 
     def delete(path, params={}, &block)
-      puts "[Songdrop::Client] delete #{path} with #{params.inspect} block? #{block_given?}"
+      puts "[Songdrop::Client] DELETE #{path} with #{params.inspect} block? #{block_given?}"
       params.merge!(:client => @token, :token => @auth_token)
       HTTP.delete(full_url(path), params) do |response, error|
         handle_response(response, error, &block)
@@ -49,6 +49,7 @@ module Songdrop
         target = response || error
         JSON.parse(target) do |obj|
           res = Parser.parse(obj)
+          res = res.first if res.is_a? Array and res.size == 1
           block.call res if block_given?
           res
         end

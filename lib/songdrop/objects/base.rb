@@ -1,5 +1,6 @@
 module Songdrop
   class Base
+    attr_reader :properties
 
     def initialize(properties={})
       @properties = properties

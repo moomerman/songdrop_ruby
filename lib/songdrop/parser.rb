@@ -38,7 +38,7 @@ module Songdrop
           # puts "[Songdrop::Parser] parsing array #{property}"
           objects = []
           hash[property].each do |el|
-            objects << parse_object(el)
+            objects << objectize(el['object'], parse_object(el))
           end
           properties[property.to_sym] = objects
         elsif hash[property].is_a? Hash

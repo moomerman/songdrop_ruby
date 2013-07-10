@@ -47,12 +47,14 @@ module Songdrop
 
       def handle_response(response, error, &block)
         target = response || error
+        res = nil
         JSON.parse(target) do |obj|
           res = Parser.parse(obj)
           res = res.first if res.is_a? Array and res.size == 1
           block.call res if block
           res
         end
+        res
       end
 
   end

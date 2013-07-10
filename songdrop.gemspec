@@ -17,4 +17,5 @@ Gem::Specification.new do |s|
   s.rubyforge_project = %q{songdrop}
   s.rubygems_version = %q{1.3.1}
   s.summary = %q{songdrop is a Ruby & RubyMotion client for the Songdrop.com API.}
+  s.license = 'MIT'
 end

@@ -12,7 +12,7 @@ module Songdrop
       puts "[Songdrop::Client] get #{path} with #{params.inspect} block? #{block_given?}"
       params.merge!(:client => @token, :token => @auth_token)
       HTTP.get(full_url(path), params) do |response, error|
-        res = handle_response(response, error, &block)
+        handle_response(response, error, &block)
       end
     end
 
@@ -28,7 +28,7 @@ module Songdrop
       puts "[Songdrop::Client] post #{path} with #{params.inspect} block? #{block_given?}"
       params.merge!(:client => @token, :token => @auth_token)
       HTTP.post(full_url(path), params) do |response, error|
-        res = handle_response(response, error, &block)
+        handle_response(response, error, &block)
       end
     end
 
@@ -36,7 +36,7 @@ module Songdrop
       puts "[Songdrop::Client] delete #{path} with #{params.inspect} block? #{block_given?}"
       params.merge!(:client => @token, :token => @auth_token)
       HTTP.delete(full_url(path), params) do |response, error|
-        res = handle_response(response, error, &block)
+        handle_response(response, error, &block)
       end
     end
 
@@ -48,7 +48,7 @@ module Songdrop
       def handle_response(response, error, &block)
         target = response || error
         JSON.parse(target) do |obj|
-          res = Parser.parse(obj).first
+          res = Parser.parse(obj)
           block.call res if block_given?
           res
         end

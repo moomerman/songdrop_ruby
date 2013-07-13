@@ -7,7 +7,10 @@ module Songdrop
     end
 
     def method_missing(method, *args, &block)
-      @properties[method.to_sym]
+      method = "is_#{$1}" if method =~ /(\S+)\?/
+      method = method.to_sym
+      return @properties[method] if @properties.has_key?(method)
+      super
     end
 
   end

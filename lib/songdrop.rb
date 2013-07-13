@@ -18,6 +18,7 @@ else
   require_relative './songdrop/client'
   require_relative './songdrop/client/methods'
   require_relative './songdrop/objects/base'
+  require_relative './songdrop/objects/collection'
   require_relative './songdrop/objects/image_helper'
   require_relative './songdrop/objects/user'
   require_relative './songdrop/objects/drop'

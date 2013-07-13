@@ -1,7 +1,9 @@
 module Songdrop
   class Parser
 
-    def self.parse(response)
+    def self.parse(response, headers={})
+
+      puts "HEADERS: #{headers[:x_pagination].inspect}"
 
       if response.is_a?(Hash) and response['object']
 
@@ -12,14 +14,23 @@ module Songdrop
 
         # we got a hash pointer to objects
         return response.keys.collect do |object|
-         objectize(object, parse_object(response[object]))
+          objectize(object, parse_object(response[object]))
         end
 
       elsif response.is_a? Array
 
         # we got an array of objects back
-        return response.collect do |object|
-         objectize(object['object'], parse_object(object))
+        result = response.collect do |object|
+          properties = parse_object(object)
+          objectize(object['object'], properties)
+        end
+
+        if headers[:x_pagination]
+          collection = Collection.new(JSON.parse(headers[:x_pagination]))
+          collection.replace(result)
+          return collection
+        else
+          return result
         end
 
       else

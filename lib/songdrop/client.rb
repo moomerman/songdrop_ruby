@@ -11,32 +11,32 @@ module Songdrop
     def get(path, params={}, &block)
       puts "[Songdrop::Client] GET #{path} with #{params.inspect} block? #{block_given?}"
       params.merge!(:client => @token, :token => @auth_token)
-      HTTP.get(full_url(path), params) do |response, error|
-        handle_response(response, error, &block)
+      HTTP.get(full_url(path), params) do |response, headers, error|
+        handle_response(response, headers, error, &block)
       end
     end
 
     def put(path, params={}, &block)
       puts "[Songdrop::Client] PUT #{path} with #{params.inspect} block? #{block_given?}"
       params.merge!(:client => @token, :token => @auth_token)
-      HTTP.put(full_url(path), params) do |response, error|
-        handle_response(response, error, &block)
+      HTTP.put(full_url(path), params) do |response, headers, error|
+        handle_response(response, headers, error, &block)
       end
     end
 
     def post(path, params={}, &block)
       puts "[Songdrop::Client] POST #{path} with #{params.inspect} block? #{block_given?}"
       params.merge!(:client => @token, :token => @auth_token)
-      HTTP.post(full_url(path), params) do |response, error|
-        handle_response(response, error, &block)
+      HTTP.post(full_url(path), params) do |response, headers, error|
+        handle_response(response, headers, error, &block)
       end
     end
 
     def delete(path, params={}, &block)
       puts "[Songdrop::Client] DELETE #{path} with #{params.inspect} block? #{block_given?}"
       params.merge!(:client => @token, :token => @auth_token)
-      HTTP.delete(full_url(path), params) do |response, error|
-        handle_response(response, error, &block)
+      HTTP.delete(full_url(path), params) do |response, headers, error|
+        handle_response(response, headers, error, &block)
       end
     end
 
@@ -45,11 +45,11 @@ module Songdrop
         "#{@endpoint}#{path}"
       end
 
-      def handle_response(response, error, &block)
+      def handle_response(response, headers, error, &block)
         target = response || error
         res = nil
         JSON.parse(target) do |obj|
-          res = Parser.parse(obj)
+          res = Parser.parse(obj, headers)
           res = res.first if res.is_a? Array and res.size == 1
           block.call res if block
           res

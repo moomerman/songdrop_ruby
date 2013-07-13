@@ -3,37 +3,41 @@ module Songdrop
 
     def self.get(url, params={}, &block)
       begin
-        block.call(RestClient.get(url, :params => params), nil)
+        response = RestClient.get(url, :params => params)
+        block.call response, response.headers, nil
       rescue => e
         puts "[Songdrop::HTTP] Error: #{e.inspect}"
-        block.call(nil, e.response)
+        block.call nil, e.response.headers, e.response
       end
     end
 
     def self.put(url, params={}, &block)
       begin
-        block.call(RestClient.put(url, params), nil)
+        response = RestClient.put(url, params)
+        block.call response, response.headers, nil
       rescue => e
         puts "[Songdrop::HTTP] Error: #{e.inspect}"
-        block.call nil, e.response
+        block.call nil, e.response.headers, e.response
       end
     end
 
     def self.post(url, params={}, &block)
       begin
-        block.call(RestClient.post(url, params), nil)
+        response = RestClient.post(url, params)
+        block.call response, response.headers, nil
       rescue => e
         puts "[Songdrop::HTTP] Error: #{e.inspect}"
-        block.call(nil, e.response)
+        block.call nil, e.response.headers, e.response
       end
     end
 
     def self.delete(url, params={}, &block)
       begin
-        block.call(RestClient.delete(url, params), nil)
+        response = RestClient.delete(url, params)
+        block.call response, response.headers, nil
       rescue => e
         puts "[Songdrop::HTTP] Error: #{e.inspect}"
-        block.call(nil, e.response)
+        block.call nil, e.response.headers, e.response
       end
     end
 

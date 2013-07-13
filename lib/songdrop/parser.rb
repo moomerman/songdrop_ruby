@@ -3,8 +3,6 @@ module Songdrop
 
     def self.parse(response, headers={})
 
-      puts "HEADERS: #{headers[:x_pagination].inspect}"
-
       if response.is_a?(Hash) and response['object']
 
         # we only got one object back

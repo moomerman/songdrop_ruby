@@ -13,6 +13,7 @@ else
 
   require 'rest-client'
   require 'json'
+  require 'date'
 
   require_relative './songdrop/parser'
   require_relative './songdrop/client'

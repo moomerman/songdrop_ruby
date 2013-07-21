@@ -43,14 +43,14 @@ module Songdrop
 
       hash.keys.each do |property|
         # puts "[Songdrop::Parser] #{property} is a #{property.class}"
-        if hash[property].is_a? Array
+        if hash[property].is_a?(Array)
           # puts "[Songdrop::Parser] parsing array #{property}"
           objects = []
           hash[property].each do |el|
             objects << objectize(el['object'], parse_object(el))
           end
           properties[property.to_sym] = objects
-        elsif hash[property].is_a? Hash
+        elsif hash[property].is_a?(Hash) and hash[property]['object']
           # puts "[Songdrop::Parser] parsing hash #{property} of type #{hash[property]['object']}"
           object = objectize(hash[property]['object'], parse_object(hash[property]))
           properties[property.to_sym] = object
@@ -70,6 +70,7 @@ module Songdrop
         when :mix then Mix.new(properties)
         when :artist then Artist.new(properties)
         when :error then Error.new(properties)
+        when :errors then Errors.new(properties)
         else "[Songdrop::Parser] Don't know how to objectize #{type}"
       end
     end

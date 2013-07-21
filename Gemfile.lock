@@ -1,14 +1,24 @@
+GIT
+  remote: https://github.com/Planbox/rest-client.git
+  revision: af5ceb0c18115deb468d59343d65668f1ffa7f64
+  branch: feature-keep-alive
+  specs:
+    rest-client (1.7.0.alpha)
+      mime-types (>= 1.16)
+      net-http-persistent
+      netrc (~> 0.7.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
     colored (1.2)
     mime-types (1.23)
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
+    net-http-persistent (2.8)
+    netrc (0.7.7)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   colored
-  rest-client
+  rest-client!

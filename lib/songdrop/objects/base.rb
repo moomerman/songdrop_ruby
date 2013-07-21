@@ -15,5 +15,9 @@ module Songdrop
       result
     end
 
+    def errors?
+      !self.errors.nil?
+    end
+
   end
 end

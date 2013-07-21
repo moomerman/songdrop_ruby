@@ -69,6 +69,7 @@ module Songdrop
         when :song then Song.new(properties)
         when :mix then Mix.new(properties)
         when :artist then Artist.new(properties)
+        when :play then Play.new(properties)
         when :error then Error.new(properties)
         when :errors then Errors.new(properties)
         else "[Songdrop::Parser] Don't know how to objectize #{type}"

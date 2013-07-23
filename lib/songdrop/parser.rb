@@ -6,20 +6,20 @@ module Songdrop
       if response.is_a?(Hash) and response['object']
 
         # we only got one object back
-        return objectize(response['object'], parse_object(response))
+        return objectize(response['object'], parse_object(response, headers))
 
       elsif response.is_a?(Hash)
 
         # we got a hash pointer to objects
         return response.keys.collect do |object|
-          objectize(object, parse_object(response[object]))
+          objectize(object, parse_object(response[object], headers))
         end
 
       elsif response.is_a? Array
 
         # we got an array of objects back
         result = response.collect do |object|
-          properties = parse_object(object)
+          properties = parse_object(object, headers)
           objectize(object['object'], properties)
         end
 
@@ -37,7 +37,7 @@ module Songdrop
       end
     end
 
-    def self.parse_object(hash)
+    def self.parse_object(hash, headers={})
       # puts "[Songdrop::Parser] PARSE #{hash.inspect}"
       properties = {}
 
@@ -49,6 +49,13 @@ module Songdrop
           hash[property].each do |el|
             objects << objectize(el['object'], parse_object(el))
           end
+
+          pagination = JSON.parse(headers[:x_pagination]) if headers[:x_pagination]
+          if pagination and pagination['element'] == property
+            collection = Collection.new(pagination)
+            objects = collection.replace(objects)
+          end
+
           properties[property.to_sym] = objects
         elsif hash[property].is_a?(Hash) and hash[property]['object']
           # puts "[Songdrop::Parser] parsing hash #{property} of type #{hash[property]['object']}"

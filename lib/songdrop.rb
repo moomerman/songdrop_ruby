@@ -27,6 +27,8 @@ else
   require_relative './songdrop/objects/mix'
   require_relative './songdrop/objects/artist'
   require_relative './songdrop/objects/play'
+  require_relative './songdrop/objects/like'
+  require_relative './songdrop/objects/following'
   require_relative './songdrop/objects/error'
   require_relative './songdrop/http/rest-client'
   require_relative './songdrop/json/json'

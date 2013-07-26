@@ -1,4 +1,4 @@
-module Sogndrop
+module Songdrop
   class Following
   end
 end

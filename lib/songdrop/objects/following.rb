@@ -1,4 +1,4 @@
 module Songdrop
-  class Following
+  class Following < Base
   end
 end

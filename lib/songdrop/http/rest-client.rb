@@ -33,7 +33,7 @@ module Songdrop
 
     def self.delete(url, params={}, &block)
       begin
-        response = RestClient.delete(url, params)
+        response = RestClient.delete(url, :params => params)
         block.call response, response.headers, nil
       rescue => e
         puts "[Songdrop::HTTP] Error: #{e.inspect}"

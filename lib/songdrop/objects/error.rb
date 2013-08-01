@@ -1,5 +1,8 @@
 module Songdrop
   class Error < Base
+    def error?
+      true
+    end
   end
 
   class Errors < Base

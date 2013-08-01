@@ -79,6 +79,7 @@ module Songdrop
         when :play then Play.new(properties)
         when :like then Like.new(properties)
         when :following then Following.new(properties)
+        when :response then Response.new(properties)
         when :error then Error.new(properties)
         when :errors then Errors.new(properties)
         else "[Songdrop::Parser] Don't know how to objectize #{type}"

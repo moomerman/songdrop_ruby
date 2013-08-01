@@ -30,6 +30,7 @@ else
   require_relative './songdrop/objects/like'
   require_relative './songdrop/objects/following'
   require_relative './songdrop/objects/error'
+  require_relative './songdrop/objects/response'
   require_relative './songdrop/http/rest-client'
   require_relative './songdrop/json/json'
 end

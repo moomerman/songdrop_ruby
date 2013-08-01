@@ -50,7 +50,6 @@ module Songdrop
         res = nil
         JSON.parse(target) do |obj|
           res = Parser.parse(obj, headers)
-          res = res.first if res.is_a? Array and res.size == 1
           block.call res if block
           res
         end

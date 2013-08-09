@@ -6,11 +6,12 @@ module Songdrop
       @token = options[:token]
       @endpoint = options[:endpoint] || 'https://songdrop.com/v1'
       @auth_token = options[:auth_token]
+      @ip_address = options[:ip_address] # if the client is proxying for the user
     end
 
     def get(path, params={}, &block)
       puts "[Songdrop::Client] GET #{path} with #{params.inspect} block? #{block_given?}"
-      params.merge!(:client => @token, :token => @auth_token)
+      params.merge!(:client => @token, :token => @auth_token, :ip => @ip_address)
       HTTP.get(full_url(path), params) do |response, headers, error|
         handle_response(response, headers, error, &block)
       end
@@ -18,7 +19,7 @@ module Songdrop
 
     def put(path, params={}, &block)
       puts "[Songdrop::Client] PUT #{path} with #{params.inspect} block? #{block_given?}"
-      params.merge!(:client => @token, :token => @auth_token)
+      params.merge!(:client => @token, :token => @auth_token, :ip => @ip_address)
       HTTP.put(full_url(path), params) do |response, headers, error|
         handle_response(response, headers, error, &block)
       end
@@ -26,7 +27,7 @@ module Songdrop
 
     def post(path, params={}, &block)
       puts "[Songdrop::Client] POST #{path} with #{params.inspect} block? #{block_given?}"
-      params.merge!(:client => @token, :token => @auth_token)
+      params.merge!(:client => @token, :token => @auth_token, :ip => @ip_address)
       HTTP.post(full_url(path), params) do |response, headers, error|
         handle_response(response, headers, error, &block)
       end
@@ -34,7 +35,7 @@ module Songdrop
 
     def delete(path, params={}, &block)
       puts "[Songdrop::Client] DELETE #{path} with #{params.inspect} block? #{block_given?}"
-      params.merge!(:client => @token, :token => @auth_token)
+      params.merge!(:client => @token, :token => @auth_token, :ip => @ip_address)
       HTTP.delete(full_url(path), params) do |response, headers, error|
         handle_response(response, headers, error, &block)
       end

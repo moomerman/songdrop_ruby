@@ -82,6 +82,7 @@ module Songdrop
         when :response then Response.new(properties)
         when :error then Error.new(properties)
         when :errors then Errors.new(properties)
+        when :chart then Chart.new(properties)
         else "[Songdrop::Parser] Don't know how to objectize #{type}"
       end
     end

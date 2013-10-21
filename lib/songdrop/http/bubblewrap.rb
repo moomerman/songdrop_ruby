@@ -25,9 +25,9 @@ module Songdrop
 
       BubbleWrap::HTTP.send(method, url, bw_options) do |response|
         if response.ok?
-          block.call response.body.to_str, nil
+          block.call response.body.to_str, response.headers, nil
         else
-          block.call nil, response.body.to_str
+          block.call nil, response.headers, response.body.to_str
         end
       end
     end
